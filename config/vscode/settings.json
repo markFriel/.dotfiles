@@ -4,7 +4,6 @@
     "PATH": "${env:HOME}/.local/bin:/usr/local/bin:${env:PATH}"
   },
 
-  "r.libPaths": ["~/.R/globallib"],
   "r.rterm.mac": "radian",
   "r.lsp.path": "/usr/local/bin/Rscript",
   "r.bracketedPaste": true,

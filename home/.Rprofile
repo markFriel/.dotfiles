@@ -17,6 +17,13 @@ local({
   options(renv.config.external.libraries = globallib)
 })
 
+# Load the isolated languageserver library so it is visible in renv projects.
+# languageserversetup installs languageserver to a private library that
+# r.libPaths (broken in vscode-R with renv) cannot reach but this can.
+if (requireNamespace("languageserversetup", quietly = TRUE)) {
+  languageserversetup::languageserver_load()
+}
+
 # Wire languageserver to use styler for "Format Document" in VS Code/Cursor.
 if (requireNamespace("styler", quietly = TRUE)) {
   options(

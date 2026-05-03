@@ -31,14 +31,19 @@ step "radian (modern R REPL)"
 uv tool install radian
 ok "radian installed — replaces base R console"
 
-# ── R packages ────────────────────────────────────────────────
+# ── R packages (base) ─────────────────────────────────────────
 step "R packages (base)"
-Rscript -e 'install.packages(c("pak", "renv"), repos = "https://cloud.r-project.org")'
+Rscript -e 'install.packages(c("pak", "renv", "languageserversetup"), repos = "https://cloud.r-project.org")'
 ok "Base R packages installed"
 
+# ── languageserver isolated install ───────────────────────────
+# languageserversetup creates an isolated library that is visible in all
+# renv projects — r.libPaths in settings.json is a known broken setting
+step "languageserver isolated install"
+Rscript -e 'languageserversetup::languageserver_install()'
+ok "languageserver installed to isolated library"
+
 # ── Global dev library ────────────────────────────────────────
-# All tools go here — VS Code picks it up via r.libPaths in settings.json
-# and renv projects see it via RENV_CONFIG_EXTERNAL_LIBRARIES in ~/.Rprofile
 step "Global dev library (~/.R/globallib)"
 mkdir -p "$HOME/.R/globallib"
 Rscript -e '
