@@ -19,6 +19,17 @@ printf "  [4] Local LLM          — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty (~
 read -r -p "Include local LLM setup? [y/N] " llm_response
 printf "\n"
 
+# ── Preflight: Xcode Command Line Tools ──────────────────────
+header "Preflight"
+if ! xcode-select -p &>/dev/null; then
+  printf "Xcode Command Line Tools are not installed.\n"
+  printf "Run the following command, wait for the install to complete,\n"
+  printf "then re-run this script:\n\n"
+  printf "  xcode-select --install\n\n"
+  exit 1
+fi
+ok "Xcode Command Line Tools present"
+
 # ── Shell environment ─────────────────────────────────────────
 header "Shell Environment"
 bash "$DOTFILES_DIR/install.sh"

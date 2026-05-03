@@ -6,7 +6,16 @@ Shell environment and developer tools setup for macOS (Apple Silicon).
 
 ### On a fresh machine (no git required)
 
-Download and extract the dotfiles, then run setup:
+**Step 1 — Install Xcode Command Line Tools**
+
+This is required by Homebrew and must be done first. A dialog will appear —
+click Install and wait for it to complete before continuing.
+
+```bash
+xcode-select --install
+```
+
+**Step 2 — Download and run setup**
 
 ```bash
 mkdir -p ~/Documents/dotfiles && \
