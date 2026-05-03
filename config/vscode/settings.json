@@ -1,10 +1,11 @@
 {
   "terminal.integrated.fontFamily": "MonaspiceNeNerdFont",
   "terminal.integrated.env.osx": {
-    "PATH": "${env:HOME}/.local/bin:${env:PATH}"
+    "PATH": "${env:HOME}/.local/bin:/usr/local/bin:${env:PATH}"
   },
 
   "r.rterm.mac": "radian",
+  "r.lsp.path": "/usr/local/bin/Rscript",
   "r.bracketedPaste": true,
   "r.sessionWatcher": true,
   "r.plot.useHttpgd": true
