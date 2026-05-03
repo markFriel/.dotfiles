@@ -47,11 +47,13 @@ mkdir -p "$HOME/.R/globallib"
 Rscript -e '
   globallib <- path.expand("~/.R/globallib")
   install.packages("pak", lib = globallib, repos = "https://cloud.r-project.org")
-  pak::pak(
-    c("ManuelHentschel/vscDebugger", "devtools", "usethis", "roxygen2",
-      "testthat", "lintr", "styler"),
-    lib = globallib
-  )
+  pkgs <- c("devtools", "usethis", "roxygen2", "testthat", "lintr", "styler")
+  for (pkg in pkgs) {
+    tryCatch(
+      pak::pak(pkg, lib = globallib),
+      error = function(e) message("Skipping ", pkg, ": ", conditionMessage(e))
+    )
+  }
 '
 ok "Global dev tools installed to ~/.R/globallib"
 
@@ -60,7 +62,6 @@ step "VS Code / Cursor R extensions"
 for editor in code cursor; do
   if command -v "$editor" &>/dev/null; then
     "$editor" --install-extension REditorSupport.r
-    "$editor" --install-extension RDebugger.r-debugger
     ok "$editor extensions installed"
   fi
 done
