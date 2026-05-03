@@ -29,16 +29,27 @@ step "R packages: languageserver, httpgd, pak, renv"
 Rscript -e 'install.packages(c("languageserver", "httpgd", "pak", "renv"), repos = "https://cloud.r-project.org")'
 ok "R packages installed"
 
-# ── VS Code R extension ───────────────────────────────────────
-step "VS Code / Cursor R extension"
-if command -v code &>/dev/null; then
-  code --install-extension REditorSupport.r
-  ok "VS Code R extension installed"
-fi
-if command -v cursor &>/dev/null; then
-  cursor --install-extension REditorSupport.r
-  ok "Cursor R extension installed"
-fi
+# ── Global dev library ────────────────────────────────────────
+# Packages here are exposed to every renv project via RENV_CONFIG_EXTERNAL_LIBRARIES
+# in ~/.Rprofile — dev tools live here so they never need to be in renv.lock
+step "Global dev library (~/.R/globallib)"
+mkdir -p "$HOME/.R/globallib"
+Rscript -e '
+  globallib <- path.expand("~/.R/globallib")
+  install.packages("pak", lib = globallib, repos = "https://cloud.r-project.org")
+  pak::pak("ManuelHentschel/vscDebugger", lib = globallib)
+'
+ok "vscDebugger installed to ~/.R/globallib"
+
+# ── VS Code R extensions ──────────────────────────────────────
+step "VS Code / Cursor R extensions"
+for editor in code cursor; do
+  if command -v "$editor" &>/dev/null; then
+    "$editor" --install-extension REditorSupport.r
+    "$editor" --install-extension RDebugger.r-debugger
+    ok "$editor extensions installed"
+  fi
+done
 
 # ── VS Code R settings ────────────────────────────────────────
 step "VS Code R settings"
