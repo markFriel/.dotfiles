@@ -39,6 +39,10 @@ if [[ -x "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# ── macOS defaults ────────────────────────────────────────────
+header "macOS Defaults"
+bash "$DOTFILES_DIR/macos-defaults.sh"
+
 # ── Developer tools ───────────────────────────────────────────
 header "Developer Tools"
 bash "$DOTFILES_DIR/install-dev.sh"

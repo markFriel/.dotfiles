@@ -35,10 +35,11 @@ new machine. Homebrew (and git) are installed as part of `setup.sh`.
 
 Or run scripts individually in order:
 ```bash
-./install.sh       # shell environment — fonts, CLI tools, config symlinks
-./install-dev.sh   # developer tools — Node, Docker, CLIs, Python toolchain
-./install-apps.sh  # applications — editors, browser, productivity apps
-./install-llm.sh   # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
+./install.sh          # shell environment — fonts, CLI tools, config symlinks
+./macos-defaults.sh   # macOS system defaults — key repeat, Finder, Dock, etc.
+./install-dev.sh      # developer tools — Node, Docker, CLIs, Python toolchain
+./install-apps.sh     # applications — editors, browser, productivity apps
+./install-llm.sh      # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
 ```
 
 Then open a new terminal and run:
@@ -71,6 +72,21 @@ Then open a new terminal and run:
 | btop | System monitor |
 | lazygit | Terminal UI for git |
 | jq | JSON processor |
+
+### macos-defaults.sh — macOS System Defaults
+
+| Setting | Effect |
+|---------|--------|
+| Key repeat | Fastest repeat speed and shortest initial delay |
+| Spaces reordering | Disables automatic Space reordering based on recent use |
+| Smart quotes + dashes | Disabled — prevents code being mangled in non-editor contexts |
+| Autocorrect + auto-capitalisation | Disabled |
+| Finder extensions | All file extensions always visible |
+| Finder path + status bar | Shows current path and item count in every Finder window |
+| Finder search scope | Searches current folder by default instead of whole Mac |
+| Dock autohide | Dock hides instantly, appears with no delay |
+| Dock recent apps | Recent apps section removed |
+| Screenshots | PNG format, no drop shadow |
 
 ### install-dev.sh — Developer Tools
 
