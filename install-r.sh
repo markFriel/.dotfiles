@@ -32,8 +32,8 @@ uv tool install radian
 ok "radian installed — replaces base R console"
 
 # ── R packages ────────────────────────────────────────────────
-step "R packages: languageserver, httpgd, pak, renv"
-Rscript -e 'install.packages(c("languageserver", "httpgd", "pak", "renv"), repos = "https://cloud.r-project.org")'
+step "R packages"
+Rscript -e 'install.packages(c("languageserver", "httpgd", "pak", "renv", "jsonlite", "rlang"), repos = "https://cloud.r-project.org")'
 ok "R packages installed"
 
 # ── Global dev library ────────────────────────────────────────
