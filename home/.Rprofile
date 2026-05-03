@@ -17,11 +17,14 @@ local({
   options(renv.config.external.libraries = globallib)
 })
 
-# Load the isolated languageserver library so it is visible in renv projects.
-# languageserversetup installs languageserver to a private library that
-# r.libPaths (broken in vscode-R with renv) cannot reach but this can.
-if (requireNamespace("languageserversetup", quietly = TRUE)) {
-  languageserversetup::languageserver_load()
+# .First() runs after ALL startup files — including the project .Rprofile
+# that activates renv and replaces .libPaths(). This adds globallib back
+# so dev tools are visible regardless of which renv project is active.
+.First <- function() {
+  globallib <- path.expand("~/.R/globallib")
+  if (dir.exists(globallib) && !globallib %in% .libPaths()) {
+    .libPaths(c(globallib, .libPaths()))
+  }
 }
 
 # Wire languageserver to use styler for "Format Document" in VS Code/Cursor.
