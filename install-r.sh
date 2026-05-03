@@ -12,20 +12,14 @@ fi
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
-# ── Rosetta 2 (required by R's bundled gfortran on Apple Silicon) ─
-step "Rosetta 2"
-softwareupdate --install-rosetta --agree-to-license 2>/dev/null || true
-ok "Rosetta 2 ready"
+# ── R build tools (required for source package compilation) ───
+step "R build tools (llvm, libomp, gettext)"
+brew install llvm libomp gettext
+ok "R build tools installed"
 
 # ── R (latest release from CRAN) ─────────────────────────────
 step "R (latest release)"
-CRAN_BASE="https://cran.r-project.org/bin/macosx/big-sur-arm64/base"
-R_PKG=$(curl -fsSL "${CRAN_BASE}/" \
-  | grep -oE 'R-[0-9]+\.[0-9]+\.[0-9]+-arm64\.pkg' | head -1)
-if [[ -z "$R_PKG" ]]; then
-  printf "Error: could not find R package on CRAN\n" && exit 1
-fi
-curl -fsSL "${CRAN_BASE}/${R_PKG}" -o /tmp/R-latest.pkg
+curl -fsSL "https://cran.r-project.org/bin/macosx/R-arm64.pkg" -o /tmp/R-latest.pkg
 sudo installer -pkg /tmp/R-latest.pkg -target /
 rm -f /tmp/R-latest.pkg
 ok "R installed"
