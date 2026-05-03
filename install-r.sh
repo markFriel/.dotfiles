@@ -17,17 +17,14 @@ step "R build tools (llvm, libomp, gettext)"
 brew install llvm libomp gettext
 ok "R build tools installed"
 
-# ── R (latest release from CRAN) ─────────────────────────────
-step "R (latest release)"
-R_PKG_PATH=$(curl -fsSL "https://cran.r-project.org/bin/macosx/" \
-  | grep -oE 'sonoma-arm64/base/R-[0-9]+\.[0-9]+\.[0-9]+-arm64\.pkg' | head -1)
-if [[ -z "$R_PKG_PATH" ]]; then
-  printf "Error: could not find R package on CRAN\n" && exit 1
-fi
-curl -fsSL "https://cran.r-project.org/bin/macosx/${R_PKG_PATH}" -o /tmp/R-latest.pkg
-sudo installer -pkg /tmp/R-latest.pkg -target /
-rm -f /tmp/R-latest.pkg
-ok "R installed"
+# ── R 4.5.0 from CRAN ────────────────────────────────────────
+# Pinned to 4.5.0 — vscDebugger does not yet compile against R 4.6.0
+step "R 4.5.0"
+curl -fsSL "https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.5.0-arm64.pkg" \
+  -o /tmp/R-4.5.0.pkg
+sudo installer -pkg /tmp/R-4.5.0.pkg -target /
+rm -f /tmp/R-4.5.0.pkg
+ok "R 4.5.0 installed"
 
 # ── radian (modern R console) ─────────────────────────────────
 step "radian (modern R REPL)"
@@ -47,7 +44,7 @@ mkdir -p "$HOME/.R/globallib"
 Rscript -e '
   globallib <- path.expand("~/.R/globallib")
   install.packages("pak", lib = globallib, repos = "https://cloud.r-project.org")
-  pkgs <- c("devtools", "usethis", "roxygen2", "testthat", "lintr", "styler")
+  pkgs <- c("ManuelHentschel/vscDebugger", "devtools", "usethis", "roxygen2", "testthat", "lintr", "styler")
   for (pkg in pkgs) {
     tryCatch(
       pak::pak(pkg, lib = globallib),
@@ -62,6 +59,7 @@ step "VS Code / Cursor R extensions"
 for editor in code cursor; do
   if command -v "$editor" &>/dev/null; then
     "$editor" --install-extension REditorSupport.r
+    "$editor" --install-extension RDebugger.r-debugger
     ok "$editor extensions installed"
   fi
 done
