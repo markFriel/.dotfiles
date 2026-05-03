@@ -55,34 +55,6 @@ for editor in code cursor; do
   fi
 done
 
-# ── VS Code R settings ────────────────────────────────────────
-step "VS Code R settings"
-radian_path="$HOME/.local/bin/radian"
-r_settings=$(cat <<EOF
-{
-  "r.rterm.mac": "$radian_path",
-  "r.bracketedPaste": true,
-  "r.sessionWatcher": true,
-  "r.plot.useHttpgd": true
-}
-EOF
-)
-
-for settings_file in \
-  "$HOME/Library/Application Support/Code/User/settings.json" \
-  "$HOME/Library/Application Support/Cursor/User/settings.json"
-do
-  if [[ -d "$(dirname "$settings_file")" ]]; then
-    if [[ -f "$settings_file" ]]; then
-      tmp=$(mktemp)
-      jq --argjson new "$r_settings" '. + $new' "$settings_file" > "$tmp" && mv "$tmp" "$settings_file"
-    else
-      echo "$r_settings" | jq '.' > "$settings_file"
-    fi
-    ok "R settings written to $(basename "$(dirname "$(dirname "$settings_file")")")"
-  fi
-done
-
 printf "\n\033[1;32mDone!\033[0m\n"
 printf "Open a new R session with: radian\n"
 printf "In VS Code/Cursor: Cmd+Shift+P → 'R: Create R Terminal'\n"

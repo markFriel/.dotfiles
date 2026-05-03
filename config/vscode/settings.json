@@ -1,0 +1,8 @@
+{
+  "terminal.integrated.fontFamily": "MonaspiceNeNerdFont",
+
+  "r.rterm.mac": "~/.local/bin/radian",
+  "r.bracketedPaste": true,
+  "r.sessionWatcher": true,
+  "r.plot.useHttpgd": true
+}

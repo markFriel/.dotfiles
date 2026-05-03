@@ -188,6 +188,8 @@ Installs all shell tools and creates the following symlinks:
 | `~/.config/yazi/yazi.toml` | `dotfiles/config/yazi/yazi.toml` |
 | `~/.config/ghostty/config` | `dotfiles/config/ghostty/config` |
 | `~/.Rprofile` | `dotfiles/home/.Rprofile` |
+| `~/Library/Application Support/Code/User/settings.json` | `dotfiles/config/vscode/settings.json` |
+| `~/Library/Application Support/Cursor/User/settings.json` | `dotfiles/config/vscode/settings.json` |
 
 ### 3. macOS defaults
 
