@@ -1,0 +1,27 @@
+[user]
+    name = Mark Friel
+    email = mfriel08@qub.ac.uk
+
+[init]
+    defaultBranch = master
+
+[pull]
+    ff = only
+
+[push]
+    autoSetupRemote = true
+    followTags = true
+
+[merge]
+    conflictstyle = zdiff3
+
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+
+[rebase]
+    autoStash = true
+
+[core]
+    autocrlf = input
+    excludesfile = ~/.gitignore_global

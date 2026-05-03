@@ -1,0 +1,28 @@
+# ── Font ─────────────────────────────────────────────────────
+font-family = MonaspiceNeNerdFont
+font-size = 12.5
+font-thicken = true
+
+# ── Window ───────────────────────────────────────────────────
+macos-titlebar-style = transparent
+shell-integration-features = cursor,sudo,no-title
+background-opacity = 0.95
+window-padding-x = 10
+window-padding-y = 8
+window-theme = dark
+
+# ── Cursor ───────────────────────────────────────────────────
+cursor-style = bar
+cursor-style-blink = true
+
+# ── Mouse ────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+
+# ── Clipboard ────────────────────────────────────────────────
+copy-on-select = true
+
+# ── Theme — Catppuccin Mocha ──────────────────────────────────
+theme = Catppuccin Mocha
+
+# ── Keybindings ──────────────────────────────────────────────
+keybind = shift+enter=text:\x1b\r
