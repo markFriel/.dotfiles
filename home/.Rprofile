@@ -11,10 +11,9 @@ options(
 # available without being project dependencies or appearing in renv.lock.
 local({
   globallib <- path.expand("~/.R/globallib")
-  if (dir.exists(globallib)) {
-    .libPaths(c(globallib, .libPaths()))
-    Sys.setenv(RENV_CONFIG_EXTERNAL_LIBRARIES = globallib)
-  }
+  dir.create(globallib, recursive = TRUE, showWarnings = FALSE)
+  .libPaths(c(globallib, .libPaths()))
+  Sys.setenv(RENV_CONFIG_EXTERNAL_LIBRARIES = globallib)
 })
 
 # Wire languageserver to use styler for "Format Document" in VS Code/Cursor.

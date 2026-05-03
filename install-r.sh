@@ -32,19 +32,23 @@ uv tool install radian
 ok "radian installed — replaces base R console"
 
 # ── R packages ────────────────────────────────────────────────
-step "R packages"
-Rscript -e 'install.packages(c("languageserver", "httpgd", "pak", "renv", "jsonlite", "rlang"), repos = "https://cloud.r-project.org")'
-ok "R packages installed"
+step "R packages (base)"
+Rscript -e 'install.packages(c("pak", "renv"), repos = "https://cloud.r-project.org")'
+ok "Base R packages installed"
 
 # ── Global dev library ────────────────────────────────────────
-# Packages here are exposed to every renv project via RENV_CONFIG_EXTERNAL_LIBRARIES
-# in ~/.Rprofile — dev tools live here so they never need to be in renv.lock
+# All tools go here — VS Code picks it up via r.libPaths in settings.json
+# and renv projects see it via RENV_CONFIG_EXTERNAL_LIBRARIES in ~/.Rprofile
 step "Global dev library (~/.R/globallib)"
 mkdir -p "$HOME/.R/globallib"
 Rscript -e '
   globallib <- path.expand("~/.R/globallib")
   install.packages("pak", lib = globallib, repos = "https://cloud.r-project.org")
-  pkgs <- c("ManuelHentschel/vscDebugger", "devtools", "usethis", "roxygen2", "testthat", "lintr", "styler")
+  pkgs <- c(
+    "languageserver", "httpgd", "jsonlite", "rlang",
+    "ManuelHentschel/vscDebugger", "devtools", "usethis",
+    "roxygen2", "testthat", "lintr", "styler"
+  )
   for (pkg in pkgs) {
     tryCatch(
       pak::pak(pkg, lib = globallib),
