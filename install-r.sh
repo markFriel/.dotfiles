@@ -14,9 +14,10 @@ ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
 # ── R (latest release from CRAN) ─────────────────────────────
 step "R (latest release)"
-R_PKG=$(curl -fsSL https://cran.r-project.org/bin/macosx/ \
+CRAN_BASE="https://cran.r-project.org/bin/macosx/big-sur-arm64/base"
+R_PKG=$(curl -fsSL "${CRAN_BASE}/" \
   | grep -oE 'R-[0-9]+\.[0-9]+\.[0-9]+-arm64\.pkg' | head -1)
-curl -fsSL "https://cran.r-project.org/bin/macosx/${R_PKG}" -o /tmp/R-latest.pkg
+curl -fsSL "${CRAN_BASE}/${R_PKG}" -o /tmp/R-latest.pkg
 sudo installer -pkg /tmp/R-latest.pkg -target /
 rm -f /tmp/R-latest.pkg
 ok "R installed"
