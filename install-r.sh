@@ -37,9 +37,13 @@ mkdir -p "$HOME/.R/globallib"
 Rscript -e '
   globallib <- path.expand("~/.R/globallib")
   install.packages("pak", lib = globallib, repos = "https://cloud.r-project.org")
-  pak::pak(c("ManuelHentschel/vscDebugger", "devtools"), lib = globallib)
+  pak::pak(
+    c("ManuelHentschel/vscDebugger", "devtools", "usethis", "roxygen2",
+      "testthat", "lintr", "styler"),
+    lib = globallib
+  )
 '
-ok "vscDebugger + devtools installed to ~/.R/globallib"
+ok "Global dev tools installed to ~/.R/globallib"
 
 # ── VS Code R extensions ──────────────────────────────────────
 step "VS Code / Cursor R extensions"
