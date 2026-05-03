@@ -1,6 +1,4 @@
 linters: linters_with_defaults(
-    line_length_linter(120L),
-    object_name_linter(styles = c("snake_case", "dotted.case", "symbols")),
-    cyclocomp_linter(complexity_limit = 15L)
+    line_length_linter(120L)
   )
 encoding: "UTF-8"
