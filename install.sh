@@ -47,6 +47,18 @@ brew install yazi fd ripgrep imagemagick poppler
 step "bat, btop, lazygit, jq, git"
 brew install bat btop lazygit jq git
 
+# ── Git remote ───────────────────────────────────────────────
+step "Git remote"
+if [[ ! -d "$DOTFILES_DIR/.git" ]]; then
+  git -C "$DOTFILES_DIR" init
+  git -C "$DOTFILES_DIR" remote add origin https://github.com/markFriel/.dotfiles.git
+  git -C "$DOTFILES_DIR" fetch origin
+  git -C "$DOTFILES_DIR" reset --hard origin/master
+  ok "Dotfiles repo connected to remote"
+else
+  ok "Git repo already initialised"
+fi
+
 # ── Symlinks — home/ → ~/  ────────────────────────────────────
 step "Symlinking home files"
 for src in "$DOTFILES_DIR/home"/.[^.]*; do
