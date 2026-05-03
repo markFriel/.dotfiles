@@ -21,7 +21,6 @@ npm install -g @anthropic-ai/claude-code
 # ── Python (via uv) ───────────────────────────────────────────
 step "uv (Python package manager)"
 curl -LsSf https://astral.sh/uv/install.sh | sh
-export PATH="$HOME/.local/bin:$PATH"
 
 step "Python 3.13 + 3.14 (via uv)"
 uv python install 3.13 3.14
@@ -54,7 +53,6 @@ brew install neovim
 # ── Git worktree management ───────────────────────────────────
 step "Worktrunk (git worktree manager)"
 brew install worktrunk
-wt config shell install
 ok "Worktrunk installed"
 
 # ── Python toolchain ──────────────────────────────────────────
@@ -68,8 +66,3 @@ step "prek (fast git hooks manager, pre-commit replacement)"
 uv tool install prek
 
 printf "\n\033[1;32mDone!\033[0m\n"
-printf "OrbStack: open it from Applications to complete setup.\n"
-printf "Claude Code: run 'claude' to authenticate.\n"
-printf "gh: run 'gh auth login' to authenticate.\n"
-printf "aws: run 'aws configure' to set credentials.\n"
-printf "az: run 'az login' to authenticate.\n"

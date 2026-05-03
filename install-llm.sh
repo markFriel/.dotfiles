@@ -19,6 +19,10 @@ ok "Msty installed"
 
 # ── oh-my-pi (terminal coding agent) ─────────────────────────
 step "oh-my-pi (AI coding agent)"
+if ! command -v npm &>/dev/null; then
+  printf "npm not found — run install-dev.sh first, then re-run this script.\n"
+  exit 1
+fi
 npm install -g @mariozechner/pi-coding-agent
 ok "pi coding agent installed"
 
@@ -30,7 +34,22 @@ ok "pi coding agent installed"
 step "Pulling Qwen3-Coder-Next (large download — grab a coffee)"
 ollama serve &
 OLLAMA_PID=$!
-sleep 3
+
+# Wait for ollama to be ready rather than using a fixed sleep
+printf "Waiting for Ollama to start..."
+for i in $(seq 1 30); do
+  if ollama list &>/dev/null; then
+    printf " ready\n"
+    break
+  fi
+  if [[ $i -eq 30 ]]; then
+    printf "\nOllama did not start in time. Try running manually: ollama serve\n"
+    kill $OLLAMA_PID 2>/dev/null || true
+    exit 1
+  fi
+  sleep 1
+done
+
 ollama pull qwen3-coder-next
 kill $OLLAMA_PID 2>/dev/null || true
 ok "Qwen3-Coder-Next ready"

@@ -13,9 +13,11 @@ ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 step "Homebrew"
 if ! command -v brew &>/dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-  ok "Already installed"
 fi
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+ok "Homebrew ready"
 
 # ── Fonts ────────────────────────────────────────────────────
 step "Fonts"
@@ -67,12 +69,12 @@ ok "Linked ~/.config/starship.toml → $DOTFILES_DIR/config/starship.toml"
 
 # tool subdirectories
 for src in "$DOTFILES_DIR/config"/*/; do
-  dirname="$(basename "$src")"
-  mkdir -p "$HOME/.config/$dirname"
+  dir_name="$(basename "$src")"
+  mkdir -p "$HOME/.config/$dir_name"
   for file in "$src"*; do
     filename="$(basename "$file")"
-    ln -sf "$file" "$HOME/.config/$dirname/$filename"
-    ok "Linked ~/.config/$dirname/$filename → $file"
+    ln -sf "$file" "$HOME/.config/$dir_name/$filename"
+    ok "Linked ~/.config/$dir_name/$filename → $file"
   done
 done
 
