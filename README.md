@@ -4,7 +4,22 @@ Shell environment and developer tools setup for macOS (Apple Silicon).
 
 ## Quick Start
 
-**One command:**
+### On a fresh machine (no git required)
+
+Download and extract the dotfiles, then run setup:
+
+```bash
+mkdir -p ~/Documents/dotfiles && \
+  curl -fsSL https://github.com/markFriel/.dotfiles/archive/refs/heads/master.tar.gz \
+  | tar -xz --strip-components=1 -C ~/Documents/dotfiles && \
+  bash ~/Documents/dotfiles/setup.sh
+```
+
+This uses only `curl` — no git, no SSH keys, no GitHub account needed on the
+new machine. Homebrew (and git) are installed as part of `setup.sh`.
+
+### On a machine with git already
+
 ```bash
 bash setup.sh
 ```
@@ -51,6 +66,7 @@ Then follow the post-install steps below.
 | Tool | Purpose |
 |------|---------|
 | Node LTS (via mise) | JavaScript runtime |
+| Python 3.13 (via mise) | Python runtime — `python3` available in PATH via mise shims |
 | Claude Code | Anthropic AI CLI |
 | Zellij | Terminal multiplexer — persistent sessions and layouts |
 | OrbStack | Docker runtime — faster than Docker Desktop on Apple Silicon |
@@ -98,8 +114,9 @@ Then follow the post-install steps below.
 
 ### 1. Place the dotfiles folder
 
-Clone or copy this folder to your machine. The install scripts use absolute
-symlinks so the folder location matters — do not move it after running the scripts.
+Use the bootstrap command above, or clone manually. The install scripts use
+absolute symlinks so the folder location matters — do not move it after
+running the scripts.
 
 ### 2. Shell environment
 
@@ -111,11 +128,13 @@ Installs all shell tools and creates the following symlinks:
 
 | Symlink | Source |
 |---------|--------|
-| `~/.zshrc` | `dotfiles/.zshrc` |
-| `~/.zsh_plugins.txt` | `dotfiles/.zsh_plugins.txt` |
-| `~/.config/starship.toml` | `dotfiles/starship.toml` |
-| `~/.config/yazi/yazi.toml` | `dotfiles/yazi/yazi.toml` |
-| `~/.config/ghostty/config` | `dotfiles/ghostty/config` |
+| `~/.zshrc` | `dotfiles/home/.zshrc` |
+| `~/.zsh_plugins.txt` | `dotfiles/home/.zsh_plugins.txt` |
+| `~/.gitconfig` | `dotfiles/home/.gitconfig` |
+| `~/.gitignore_global` | `dotfiles/home/.gitignore_global` |
+| `~/.config/starship.toml` | `dotfiles/config/starship.toml` |
+| `~/.config/yazi/yazi.toml` | `dotfiles/config/yazi/yazi.toml` |
+| `~/.config/ghostty/config` | `dotfiles/config/ghostty/config` |
 
 ### 3. Developer tools
 

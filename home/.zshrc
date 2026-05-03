@@ -63,6 +63,7 @@ eval "$(mise activate zsh)"
 # ============================================================
 # uv — Python package manager
 # ============================================================
+export PATH="$HOME/.local/bin:$PATH"
 command -v uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
 
 # ============================================================

@@ -9,10 +9,14 @@ export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
-# ── Node LTS via mise ─────────────────────────────────────────
+# ── Runtimes via mise ─────────────────────────────────────────
 step "Node LTS (via mise)"
 mise use -g node@lts
 ok "Node LTS installed"
+
+step "Python 3.13 (via mise)"
+mise use -g python@3.13
+ok "Python 3.13 installed"
 
 # ── Claude Code ───────────────────────────────────────────────
 step "Claude Code"
