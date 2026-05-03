@@ -6,12 +6,22 @@ options(
   warn = 1
 )
 
-# Always expose the global dev library to renv projects.
-# Dev tools (vscDebugger, etc.) live here so they never need to be added
-# to renv.lock — they are available in every project without being project deps.
+# Add global dev library to the search path for all sessions (renv and non-renv).
+# Dev tools (vscDebugger, devtools, styler, etc.) live here so they are always
+# available without being project dependencies or appearing in renv.lock.
 local({
   globallib <- path.expand("~/.R/globallib")
   if (dir.exists(globallib)) {
+    .libPaths(c(globallib, .libPaths()))
     Sys.setenv(RENV_CONFIG_EXTERNAL_LIBRARIES = globallib)
   }
 })
+
+# Wire languageserver to use styler for "Format Document" in VS Code/Cursor.
+if (requireNamespace("styler", quietly = TRUE)) {
+  options(
+    languageserver.formatting_style = function(options) {
+      styler::tidyverse_style(indent_by = options$tabSize)
+    }
+  )
+}
