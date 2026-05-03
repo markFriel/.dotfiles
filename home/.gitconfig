@@ -22,6 +22,9 @@
 [rebase]
     autoStash = true
 
+[credential]
+    helper = osxkeychain
+
 [core]
     autocrlf = input
     excludesfile = ~/.gitignore_global

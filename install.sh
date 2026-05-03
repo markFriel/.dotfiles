@@ -44,8 +44,8 @@ brew install zoxide
 step "yazi (file manager) + preview dependencies"
 brew install yazi fd ripgrep imagemagick poppler
 
-step "bat, btop, lazygit, jq"
-brew install bat btop lazygit jq
+step "bat, btop, lazygit, jq, git"
+brew install bat btop lazygit jq git
 
 # ── Symlinks — home/ → ~/  ────────────────────────────────────
 step "Symlinking home files"

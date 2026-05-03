@@ -21,7 +21,7 @@ xcode-select --install
 mkdir -p ~/Documents/dotfiles && \
   curl -fsSL https://github.com/markFriel/.dotfiles/archive/refs/heads/master.tar.gz \
   | tar -xz --strip-components=1 -C ~/Documents/dotfiles && \
-  bash ~/Documents/dotfiles/setup.sh
+  ~/Documents/dotfiles/setup.sh
 ```
 
 This uses only `curl` — no git, no SSH keys, no GitHub account needed on the
@@ -30,18 +30,21 @@ new machine. Homebrew (and git) are installed as part of `setup.sh`.
 ### On a machine with git already
 
 ```bash
-bash setup.sh
+./setup.sh
 ```
 
 Or run scripts individually in order:
 ```bash
-bash install.sh       # shell environment — fonts, CLI tools, config symlinks
-bash install-dev.sh   # developer tools — Node, Docker, CLIs, Python toolchain
-bash install-apps.sh  # applications — editors, browser, productivity apps
-bash install-llm.sh   # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
+./install.sh       # shell environment — fonts, CLI tools, config symlinks
+./install-dev.sh   # developer tools — Node, Docker, CLIs, Python toolchain
+./install-apps.sh  # applications — editors, browser, productivity apps
+./install-llm.sh   # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
 ```
 
-Then follow the post-install steps below.
+Then open a new terminal and run:
+```bash
+./post-install.sh  # interactive — CLI auth and shell integration
+```
 
 ---
 
@@ -74,7 +77,7 @@ Then follow the post-install steps below.
 | Tool | Purpose |
 |------|---------|
 | Node (via Homebrew) | JavaScript runtime |
-| Python 3.13 (via uv) | Python runtime — `python3` available in PATH |
+| Python 3.13 + 3.14 (via uv) | Python runtimes — `python3` defaults to 3.14 |
 | Claude Code | Anthropic AI CLI |
 | Zellij | Terminal multiplexer — persistent sessions and layouts |
 | OrbStack | Docker runtime — faster than Docker Desktop on Apple Silicon |
@@ -129,7 +132,7 @@ running the scripts.
 ### 2. Shell environment
 
 ```bash
-bash install.sh
+./install.sh
 ```
 
 Installs all shell tools and creates the following symlinks:
@@ -147,13 +150,13 @@ Installs all shell tools and creates the following symlinks:
 ### 3. Developer tools
 
 ```bash
-bash install-dev.sh
+./install-dev.sh
 ```
 
 ### 4. Applications
 
 ```bash
-bash install-apps.sh
+./install-apps.sh
 ```
 
 ### 5. Open OrbStack
@@ -169,14 +172,16 @@ Both Rectangle and HyperKey require accessibility access:
 
 Enable both apps when prompted, or add them manually.
 
-### 7. Authenticate CLIs
+### 7. Post-install (auth + shell integration)
+
+Open a new terminal, then run:
 
 ```bash
-gh auth login        # GitHub — follow interactive prompt
-aws configure        # AWS — Access Key ID, Secret, region, output format
-az login             # Azure — opens browser
-claude               # Claude Code — follow auth prompt
+./post-install.sh
 ```
+
+This handles: Worktrunk shell integration, `gh auth login`, `aws configure`,
+`az login`, and Claude Code authentication — in order.
 
 ### 8. Open a new terminal
 
@@ -189,7 +194,7 @@ Ghostty config already sets **MonaspiceNeNerdFont** (Monaspace Neon).
 
 ### Adding a zsh plugin
 
-Add a line to `dotfiles/.zsh_plugins.txt`:
+Add a line to `dotfiles/home/.zsh_plugins.txt`:
 
 ```
 zsh-users/zsh-autosuggestions
@@ -202,7 +207,7 @@ Open a new terminal or run `antidote load` to activate.
 
 ### Configuring the prompt
 
-Edit `dotfiles/starship.toml`. The package version module is disabled by default.
+Edit `dotfiles/config/starship.toml`. The package version module is disabled by default.
 
 ```bash
 starship preset --list    # browse built-in presets
@@ -211,11 +216,11 @@ starship explain          # see what each segment in your prompt does
 
 ### Configuring Ghostty
 
-Edit `dotfiles/ghostty/config`. Changes take effect on next window open.
+Edit `dotfiles/config/ghostty/config`. Changes take effect on next window open.
 
 ### Configuring yazi
 
-Edit `dotfiles/yazi/yazi.toml`. Additional config files go in the same folder:
+Edit `dotfiles/config/yazi/yazi.toml`. Additional config files go in the same folder:
 - `keymap.toml` — custom keybindings
 - `theme.toml` — colours
 
