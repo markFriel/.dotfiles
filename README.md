@@ -72,6 +72,7 @@ Then open a new terminal and run:
 | btop | System monitor |
 | lazygit | Terminal UI for git |
 | jq | JSON processor |
+| git | Latest git (replaces outdated Xcode CLT version) |
 
 ### macos-defaults.sh — macOS System Defaults
 
@@ -141,9 +142,11 @@ Then open a new terminal and run:
 
 ### 1. Place the dotfiles folder
 
-Use the bootstrap command above, or clone manually. The install scripts use
-absolute symlinks so the folder location matters — do not move it after
-running the scripts.
+Use the bootstrap command above, or clone manually to `~/Documents/dotfiles`.
+The install scripts use absolute symlinks so the folder location matters —
+do not move it after running the scripts.
+
+All `./script.sh` commands below should be run from `~/Documents/dotfiles`.
 
 ### 2. Shell environment
 
@@ -156,6 +159,7 @@ Installs all shell tools and creates the following symlinks:
 | Symlink | Source |
 |---------|--------|
 | `~/.zshrc` | `dotfiles/home/.zshrc` |
+| `~/.zprofile` | `dotfiles/home/.zprofile` |
 | `~/.zsh_plugins.txt` | `dotfiles/home/.zsh_plugins.txt` |
 | `~/.gitconfig` | `dotfiles/home/.gitconfig` |
 | `~/.gitignore_global` | `dotfiles/home/.gitignore_global` |
@@ -163,24 +167,30 @@ Installs all shell tools and creates the following symlinks:
 | `~/.config/yazi/yazi.toml` | `dotfiles/config/yazi/yazi.toml` |
 | `~/.config/ghostty/config` | `dotfiles/config/ghostty/config` |
 
-### 3. Developer tools
+### 3. macOS defaults
+
+```bash
+./macos-defaults.sh
+```
+
+### 4. Developer tools
 
 ```bash
 ./install-dev.sh
 ```
 
-### 4. Applications
+### 5. Applications
 
 ```bash
 ./install-apps.sh
 ```
 
-### 5. Open OrbStack
+### 6. Open OrbStack
 
 Open OrbStack from Applications to complete its initial setup. The `docker`
 command becomes available after first launch.
 
-### 6. Grant accessibility permissions
+### 7. Grant accessibility permissions
 
 Both Rectangle and HyperKey require accessibility access:
 
@@ -188,18 +198,18 @@ Both Rectangle and HyperKey require accessibility access:
 
 Enable both apps when prompted, or add them manually.
 
-### 7. Post-install (auth + shell integration)
+### 8. Post-install (auth + shell integration)
 
 Open a new terminal, then run:
 
 ```bash
-./post-install.sh
+~/Documents/dotfiles/post-install.sh
 ```
 
 This handles: Worktrunk shell integration, `gh auth login`, `aws configure`,
 `az login`, and Claude Code authentication — in order.
 
-### 8. Open a new terminal
+### 9. Open a new terminal
 
 Open Ghostty. Icons and grid layout in `ls` require the Nerd Font — the
 Ghostty config already sets **MonaspiceNeNerdFont** (Monaspace Neon).
