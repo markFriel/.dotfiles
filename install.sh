@@ -45,32 +45,35 @@ brew install yazi fd ripgrep imagemagick poppler
 step "bat, btop, lazygit, jq, mise"
 brew install bat btop lazygit jq mise
 
-# ── Git config ───────────────────────────────────────────────
-step "Git config"
-if [[ -f "$HOME/.gitconfig" && ! -L "$HOME/.gitconfig" ]]; then
-  mv "$HOME/.gitconfig" "$HOME/.gitconfig.backup.$(date +%Y%m%d_%H%M%S)"
-fi
-ln -sf "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
-ok "Linked ~/.gitconfig → $DOTFILES_DIR/.gitconfig"
-ln -sf "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore_global"
-ok "Linked ~/.gitignore_global → $DOTFILES_DIR/.gitignore_global"
+# ── Symlinks — home/ → ~/  ────────────────────────────────────
+step "Symlinking home files"
+for src in "$DOTFILES_DIR/home"/.[^.]*; do
+  filename="$(basename "$src")"
+  dest="$HOME/$filename"
+  if [[ -f "$dest" && ! -L "$dest" ]]; then
+    mv "$dest" "$dest.backup.$(date +%Y%m%d_%H%M%S)"
+  fi
+  ln -sf "$src" "$dest"
+  ok "Linked ~/$filename → $src"
+done
 
-# ── .zshrc symlink ───────────────────────────────────────────
-step ".zshrc"
-if [[ -f "$HOME/.zshrc" && ! -L "$HOME/.zshrc" ]]; then
-  mv "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d_%H%M%S)"
-fi
-ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-ok "Linked ~/.zshrc → $DOTFILES_DIR/.zshrc"
-ln -sf "$DOTFILES_DIR/.zsh_plugins.txt" "$HOME/.zsh_plugins.txt"
-ok "Linked ~/.zsh_plugins.txt → $DOTFILES_DIR/.zsh_plugins.txt"
-mkdir -p "$HOME/.config/yazi"
-ln -sf "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
-ok "Linked ~/.config/starship.toml → $DOTFILES_DIR/starship.toml"
-ln -sf "$DOTFILES_DIR/yazi/yazi.toml" "$HOME/.config/yazi/yazi.toml"
-ok "Linked ~/.config/yazi/yazi.toml → $DOTFILES_DIR/yazi/yazi.toml"
-mkdir -p "$HOME/.config/ghostty"
-ln -sf "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
-ok "Linked ~/.config/ghostty/config → $DOTFILES_DIR/ghostty/config"
+# ── Symlinks — config/ → ~/.config/  ─────────────────────────
+step "Symlinking config files"
+mkdir -p "$HOME/.config"
+
+# starship.toml sits directly in config/
+ln -sf "$DOTFILES_DIR/config/starship.toml" "$HOME/.config/starship.toml"
+ok "Linked ~/.config/starship.toml → $DOTFILES_DIR/config/starship.toml"
+
+# tool subdirectories
+for src in "$DOTFILES_DIR/config"/*/; do
+  dirname="$(basename "$src")"
+  mkdir -p "$HOME/.config/$dirname"
+  for file in "$src"*; do
+    filename="$(basename "$file")"
+    ln -sf "$file" "$HOME/.config/$dirname/$filename"
+    ok "Linked ~/.config/$dirname/$filename → $file"
+  done
+done
 
 printf "\n\033[1;32mDone!\033[0m Restart your terminal or run: source ~/.zshrc\n"
