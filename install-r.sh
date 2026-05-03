@@ -19,7 +19,12 @@ ok "R build tools installed"
 
 # ── R (latest release from CRAN) ─────────────────────────────
 step "R (latest release)"
-curl -fsSL "https://cran.r-project.org/bin/macosx/R-arm64.pkg" -o /tmp/R-latest.pkg
+R_PKG_PATH=$(curl -fsSL "https://cran.r-project.org/bin/macosx/" \
+  | grep -oE 'sonoma-arm64/base/R-[0-9]+\.[0-9]+\.[0-9]+-arm64\.pkg' | head -1)
+if [[ -z "$R_PKG_PATH" ]]; then
+  printf "Error: could not find R package on CRAN\n" && exit 1
+fi
+curl -fsSL "https://cran.r-project.org/bin/macosx/${R_PKG_PATH}" -o /tmp/R-latest.pkg
 sudo installer -pkg /tmp/R-latest.pkg -target /
 rm -f /tmp/R-latest.pkg
 ok "R installed"
