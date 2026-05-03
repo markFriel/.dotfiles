@@ -61,7 +61,7 @@ alias lt='eza --icons --tree --group-directories-first'
 export PATH="$HOME/.local/bin:$PATH"
 if command -v uv &>/dev/null; then
   eval "$(uv generate-shell-completion zsh)"
-  _uv_py="$(uv python find 3.13 2>/dev/null)"
+  _uv_py="$(uv python find 3.14 2>/dev/null)"
   [[ -n "$_uv_py" ]] && export PATH="$(dirname "$_uv_py"):$PATH"
   unset _uv_py
 fi

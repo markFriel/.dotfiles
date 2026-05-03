@@ -23,9 +23,9 @@ step "uv (Python package manager)"
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 
-step "Python 3.13 (via uv)"
-uv python install 3.13
-ok "Python 3.13 installed"
+step "Python 3.13 + 3.14 (via uv)"
+uv python install 3.13 3.14
+ok "Python 3.13 and 3.14 installed"
 
 # ── Terminal multiplexer ──────────────────────────────────────
 step "Zellij"
