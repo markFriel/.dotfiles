@@ -5,6 +5,9 @@
 set -euo pipefail
 
 export PATH="$HOME/.local/bin:$PATH"
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
@@ -15,9 +18,10 @@ brew install rig
 ok "rig installed"
 
 # ── R (latest release) ────────────────────────────────────────
+# rig installs R to /Library/Frameworks/ which requires sudo on macOS
 step "R (latest release via rig)"
-rig install release
-ok "R $(rig default) installed"
+sudo rig install release
+ok "R installed"
 
 # ── radian (modern R console) ─────────────────────────────────
 step "radian (modern R REPL)"
