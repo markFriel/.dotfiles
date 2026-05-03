@@ -4,23 +4,28 @@
 
 set -euo pipefail
 
-export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
-# ── Runtimes via mise ─────────────────────────────────────────
-step "Node LTS (via mise)"
-mise use -g node@lts
-ok "Node LTS installed"
-
-step "Python 3.13 (via mise)"
-mise use -g python@3.13
-ok "Python 3.13 installed"
+# ── Node ──────────────────────────────────────────────────────
+step "Node (via Homebrew)"
+brew install node
+ok "Node installed"
 
 # ── Claude Code ───────────────────────────────────────────────
 step "Claude Code"
 npm install -g @anthropic-ai/claude-code
+
+# ── Python (via uv) ───────────────────────────────────────────
+step "uv (Python package manager)"
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+
+step "Python 3.13 (via uv)"
+uv python install 3.13
+ok "Python 3.13 installed"
 
 # ── Terminal multiplexer ──────────────────────────────────────
 step "Zellij"
@@ -53,9 +58,6 @@ wt config shell install
 ok "Worktrunk installed"
 
 # ── Python toolchain ──────────────────────────────────────────
-step "uv (Python package manager)"
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
 step "ruff (Python linter/formatter)"
 uv tool install ruff
 

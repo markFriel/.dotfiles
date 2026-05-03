@@ -56,15 +56,15 @@ alias la='eza --icons --group-directories-first -lAh'
 alias lt='eza --icons --tree --group-directories-first'
 
 # ============================================================
-# mise — runtime version manager
-# ============================================================
-eval "$(mise activate zsh)"
-
-# ============================================================
-# uv — Python package manager
+# uv — Python package manager + runtime
 # ============================================================
 export PATH="$HOME/.local/bin:$PATH"
-command -v uv &>/dev/null && eval "$(uv generate-shell-completion zsh)"
+if command -v uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+  _uv_py="$(uv python find 3.13 2>/dev/null)"
+  [[ -n "$_uv_py" ]] && export PATH="$(dirname "$_uv_py"):$PATH"
+  unset _uv_py
+fi
 
 # ============================================================
 # fzf — fuzzy finder

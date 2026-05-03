@@ -59,14 +59,13 @@ Then follow the post-install steps below.
 | btop | System monitor |
 | lazygit | Terminal UI for git |
 | jq | JSON processor |
-| mise | Runtime version manager (Node, Python, etc.) |
 
 ### install-dev.sh — Developer Tools
 
 | Tool | Purpose |
 |------|---------|
-| Node LTS (via mise) | JavaScript runtime |
-| Python 3.13 (via mise) | Python runtime — `python3` available in PATH via mise shims |
+| Node (via Homebrew) | JavaScript runtime |
+| Python 3.13 (via uv) | Python runtime — `python3` available in PATH |
 | Claude Code | Anthropic AI CLI |
 | Zellij | Terminal multiplexer — persistent sessions and layouts |
 | OrbStack | Docker runtime — faster than Docker Desktop on Apple Silicon |
@@ -210,14 +209,6 @@ Edit `dotfiles/ghostty/config`. Changes take effect on next window open.
 Edit `dotfiles/yazi/yazi.toml`. Additional config files go in the same folder:
 - `keymap.toml` — custom keybindings
 - `theme.toml` — colours
-
-### Managing runtime versions (mise)
-
-```bash
-mise use node@22          # pin Node 22 in the current project (.mise.toml)
-mise use -g node@lts      # set a runtime globally
-mise list                 # show installed runtimes
-```
 
 ### Python workflow (uv)
 
