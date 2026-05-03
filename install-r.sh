@@ -12,9 +12,15 @@ fi
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
+# ── rig (R version manager) ───────────────────────────────────
+step "rig (R version manager)"
+brew install rig
+ok "rig installed"
+
 # ── R (latest release) ────────────────────────────────────────
-step "R (latest release)"
-brew install --cask r
+# sudo -E preserves HOME so rig can find its data directory
+step "R (latest release via rig)"
+sudo -E rig install release
 ok "R installed"
 
 # ── radian (modern R console) ─────────────────────────────────
