@@ -114,8 +114,7 @@ Then open a new terminal and run:
 
 | Tool | Purpose |
 |------|---------|
-| rig | R version manager — install and switch R versions |
-| R (latest) | R runtime installed via rig |
+| R (latest) | R runtime installed via Homebrew cask |
 | radian | Modern R console — syntax highlighting, multiline editing, replaces base R terminal |
 | languageserver | R package powering intellisense and go-to-definition in VS Code |
 | httpgd | R package for interactive plots rendered inline in VS Code |
