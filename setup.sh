@@ -14,8 +14,10 @@ printf "\n\033[1;37mThis will install:\033[0m\n"
 printf "  [1] Shell environment  — fonts, CLI tools, config symlinks\n"
 printf "  [2] Developer tools    — Node, Docker, CLIs, Python toolchain\n"
 printf "  [3] Applications       — editors, browser, productivity apps\n"
-printf "  [4] Local LLM          — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty (~20GB)\n\n"
+printf "  [4] R environment      — rig, R, radian, languageserver, VS Code setup\n"
+printf "  [5] Local LLM          — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty (~20GB)\n\n"
 
+read -r -p "Include R development environment? [y/N] " r_response
 read -r -p "Include local LLM setup? [y/N] " llm_response
 printf "\n"
 
@@ -50,6 +52,15 @@ bash "$DOTFILES_DIR/install-dev.sh"
 # ── Applications ──────────────────────────────────────────────
 header "Applications"
 bash "$DOTFILES_DIR/install-apps.sh"
+
+# ── R environment (optional) ──────────────────────────────────
+if [[ "$r_response" =~ ^[Yy]$ ]]; then
+  header "R Environment"
+  bash "$DOTFILES_DIR/install-r.sh"
+else
+  header "R Environment — Skipped"
+  printf "Run 'bash install-r.sh' any time to set this up.\n"
+fi
 
 # ── Local LLM (optional) ──────────────────────────────────────
 if [[ "$llm_response" =~ ^[Yy]$ ]]; then

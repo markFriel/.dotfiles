@@ -39,6 +39,7 @@ Or run scripts individually in order:
 ./macos-defaults.sh   # macOS system defaults — key repeat, Finder, Dock, etc.
 ./install-dev.sh      # developer tools — Node, Docker, CLIs, Python toolchain
 ./install-apps.sh     # applications — editors, browser, productivity apps
+./install-r.sh        # R environment — rig, R, radian, languageserver, VS Code setup
 ./install-llm.sh      # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
 ```
 
@@ -109,6 +110,25 @@ Then open a new terminal and run:
 | prek | Fast git hooks manager — Rust-based pre-commit replacement |
 | Worktrunk | Git worktree manager — create, switch, and delete worktrees with `wt` |
 
+### install-r.sh — R Environment (optional)
+
+| Tool | Purpose |
+|------|---------|
+| rig | R version manager — install and switch R versions |
+| R (latest) | R runtime installed via rig |
+| radian | Modern R console — syntax highlighting, multiline editing, replaces base R terminal |
+| languageserver | R package powering intellisense and go-to-definition in VS Code |
+| httpgd | R package for interactive plots rendered inline in VS Code |
+| pak | Fast R package installer with dependency resolver |
+| renv | R package management per project (also installed globally) |
+| REditorSupport.r | VS Code / Cursor extension for R language support |
+
+VS Code/Cursor settings written automatically:
+- Terminal points to radian
+- Bracketed paste enabled (required for radian)
+- Session watcher enabled (powers inline plot viewer and workspace explorer)
+- httpgd enabled for plots
+
 ### install-llm.sh — Local LLM (optional, M5 Pro optimised)
 
 | Tool | Purpose |
@@ -167,6 +187,7 @@ Installs all shell tools and creates the following symlinks:
 | `~/.config/starship.toml` | `dotfiles/config/starship.toml` |
 | `~/.config/yazi/yazi.toml` | `dotfiles/config/yazi/yazi.toml` |
 | `~/.config/ghostty/config` | `dotfiles/config/ghostty/config` |
+| `~/.Rprofile` | `dotfiles/home/.Rprofile` |
 
 ### 3. macOS defaults
 
