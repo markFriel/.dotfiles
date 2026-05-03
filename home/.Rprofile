@@ -14,6 +14,7 @@ local({
   dir.create(globallib, recursive = TRUE, showWarnings = FALSE)
   .libPaths(c(globallib, .libPaths()))
   Sys.setenv(RENV_CONFIG_EXTERNAL_LIBRARIES = globallib)
+  options(renv.config.external.libraries = globallib)
 })
 
 # Wire languageserver to use styler for "Format Document" in VS Code/Cursor.
