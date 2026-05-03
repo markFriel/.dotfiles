@@ -48,6 +48,31 @@ brew install --cask hyperkey
 step "Zen Browser"
 brew install --cask zen-browser
 
+# ── VS Code / Cursor settings ─────────────────────────────────
+step "VS Code / Cursor settings"
+base_settings=$(cat <<'EOF'
+{
+  "terminal.integrated.fontFamily": "MonaspiceNeNerdFont"
+}
+EOF
+)
+
+for settings_file in \
+  "$HOME/Library/Application Support/Code/User/settings.json" \
+  "$HOME/Library/Application Support/Cursor/User/settings.json"
+do
+  dir="$(dirname "$settings_file")"
+  if [[ -d "$dir" ]]; then
+    if [[ -f "$settings_file" ]]; then
+      tmp=$(mktemp)
+      jq --argjson new "$base_settings" '. + $new' "$settings_file" > "$tmp" && mv "$tmp" "$settings_file"
+    else
+      echo "$base_settings" | jq '.' > "$settings_file"
+    fi
+    ok "Settings written to $(basename "$(dirname "$dir")")"
+  fi
+done
+
 printf "\n\033[1;32mDone!\033[0m\n"
 printf "1Password: sign in to your account to sync passwords.\n"
 printf "TablePlus: add your database connections.\n"
