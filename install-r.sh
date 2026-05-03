@@ -12,15 +12,13 @@ fi
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
-# ── rig (R version manager) ───────────────────────────────────
-step "rig (R version manager)"
-brew install rig
-ok "rig installed"
-
-# ── R (latest release) ────────────────────────────────────────
-# sudo -E preserves HOME so rig can find its data directory
-step "R (latest release via rig)"
-sudo -E rig install release
+# ── R (latest release from CRAN) ─────────────────────────────
+step "R (latest release)"
+R_PKG=$(curl -fsSL https://cran.r-project.org/bin/macosx/ \
+  | grep -oE 'R-[0-9]+\.[0-9]+\.[0-9]+-arm64\.pkg' | head -1)
+curl -fsSL "https://cran.r-project.org/bin/macosx/${R_PKG}" -o /tmp/R-latest.pkg
+sudo installer -pkg /tmp/R-latest.pkg -target /
+rm -f /tmp/R-latest.pkg
 ok "R installed"
 
 # ── radian (modern R console) ─────────────────────────────────
