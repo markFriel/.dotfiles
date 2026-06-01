@@ -29,11 +29,6 @@ step "Ollama (local LLM server)"
 brew install ollama
 ok "Ollama installed"
 
-# ── Msty (chat UI) ────────────────────────────────────────────
-step "Msty (chat UI — MLX-native, zero setup)"
-brew install --cask msty
-ok "Msty installed"
-
 # ── oh-my-pi (terminal coding agent) ─────────────────────────
 step "oh-my-pi (AI coding agent)"
 npm install -g @mariozechner/pi-coding-agent

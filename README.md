@@ -135,7 +135,6 @@ VS Code/Cursor settings written automatically:
 | Ollama | Local LLM server with MLX backend (Apple Silicon optimised) |
 | Gemma 4 31B | Google's latest model — strong coding and reasoning, Q4 fits in 48GB |
 | oh-my-pi | Terminal coding agent with LSP, subagents, browser control |
-| Msty | Native Mac chat UI, MLX-native, zero setup |
 
 > Model pulls Q4 by default (~18GB). MLX acceleration enabled via `OLLAMA_USE_MLX=1` in `.zshrc`.
 
@@ -159,10 +158,6 @@ Verify the model is available:
 ollama list
 # gemma4:31b   ...
 ```
-
-### Chat UI — Msty
-
-Open **Msty** from Applications. It auto-discovers the running Ollama server and lists `gemma4:31b` as an available model. No configuration needed.
 
 ### Terminal coding agent — pi
 
