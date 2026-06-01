@@ -102,7 +102,6 @@ Then open a new terminal and run:
 | AWS CLI | Amazon Web Services CLI |
 | Azure CLI | Microsoft Azure CLI |
 | GitHub CLI | GitHub CLI |
-| GitHub Copilot CLI | AI assistant in the terminal — `gh copilot suggest` and `gh copilot explain` |
 | Neovim | Terminal text editor |
 | uv | Fast Python package and project manager |
 | ruff | Fast Python linter and formatter (replaces flake8, isort, black) |

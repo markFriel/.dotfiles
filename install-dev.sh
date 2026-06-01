@@ -46,10 +46,6 @@ brew install azure-cli
 step "GitHub CLI"
 brew install gh
 
-step "GitHub Copilot CLI"
-gh extension install github/gh-copilot
-ok "GitHub Copilot CLI installed (gh copilot)"
-
 # ── Neovim ───────────────────────────────────────────────────
 step "Neovim"
 brew install neovim
