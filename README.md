@@ -138,6 +138,8 @@ VS Code/Cursor settings written automatically:
 
 > Model pulls Q4 by default (~18GB). MLX acceleration enabled via `OLLAMA_USE_MLX=1` in `.zshrc`.
 
+> **Alternative:** [oMLX](https://omlx.ai) is a purpose-built MLX inference server for Apple Silicon with continuous batching, RAM+SSD KV caching (cuts agent time-to-first-token from ~60s to under 5s), and a menu bar UI. It exposes the same OpenAI-compatible API so `pi` works against it without config changes. Worth considering if Ollama feels slow for long coding sessions.
+
 ---
 
 ## Using the Local LLM Stack
