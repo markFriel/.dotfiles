@@ -133,11 +133,11 @@ VS Code/Cursor settings written automatically:
 | Tool | Purpose |
 |------|---------|
 | Ollama | Local LLM server with MLX backend (Apple Silicon optimised) |
-| Qwen3-Coder-Next | Best open source coding model — 58.7% SWE-bench |
+| Gemma 4 31B | Google's latest model — strong coding and reasoning, Q4 fits in 48GB |
 | oh-my-pi | Terminal coding agent with LSP, subagents, browser control |
 | Msty | Native Mac chat UI, MLX-native, zero setup |
 
-> Model pulls Q4_K_M by default (~20GB). On 48GB RAM upgrade to `q6_K` or `q8_0` for better code quality. MLX acceleration enabled via `OLLAMA_USE_MLX=1` in `.zshrc`.
+> Model pulls Q4 by default (~18GB). MLX acceleration enabled via `OLLAMA_USE_MLX=1` in `.zshrc`.
 
 ### install-apps.sh — Applications
 

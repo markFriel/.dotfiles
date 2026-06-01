@@ -27,39 +27,36 @@ npm install -g @mariozechner/pi-coding-agent
 ok "pi coding agent installed"
 
 # ── Pull model ────────────────────────────────────────────────
-# Qwen3-Coder-Next — best open source coding model for 48GB
-# Default tag pulls Q4_K_M (~20GB). For higher quality on 48GB:
-#   ollama pull qwen3-coder-next:q6_K   (~28GB, better code output)
-#   ollama pull qwen3-coder-next:q8_0   (~38GB, best quality)
-step "Pulling Qwen3-Coder-Next (large download — grab a coffee)"
-ollama serve &
-OLLAMA_PID=$!
+# Gemma 4 31B — Google's latest model, Q4 fits comfortably in 48GB
+step "Pulling gemma4:31b (large download — grab a coffee)"
 
-# Wait for ollama to be ready rather than using a fixed sleep
-printf "Waiting for Ollama to start..."
-for i in $(seq 1 30); do
-  if ollama list &>/dev/null; then
-    printf " ready\n"
-    break
-  fi
-  if [[ $i -eq 30 ]]; then
-    printf "\nOllama did not start in time. Try running manually: ollama serve\n"
-    kill $OLLAMA_PID 2>/dev/null || true
-    exit 1
-  fi
-  sleep 1
-done
+# Start Ollama only if it isn't already running
+OLLAMA_PID=""
+if ! ollama list &>/dev/null 2>&1; then
+  ollama serve &
+  OLLAMA_PID=$!
+  printf "Waiting for Ollama to start..."
+  for i in $(seq 1 60); do
+    if ollama list &>/dev/null 2>&1; then
+      printf " ready\n"
+      break
+    fi
+    if [[ $i -eq 60 ]]; then
+      printf "\nOllama did not start in time. Try running manually: ollama serve\n"
+      kill "$OLLAMA_PID" 2>/dev/null || true
+      exit 1
+    fi
+    sleep 1
+  done
+fi
 
-ollama pull qwen3-coder-next
-kill $OLLAMA_PID 2>/dev/null || true
-ok "Qwen3-Coder-Next ready"
+ollama pull gemma4:31b
+[[ -n "$OLLAMA_PID" ]] && kill "$OLLAMA_PID" 2>/dev/null || true
+ok "gemma4:31b ready"
 
 printf "\n\033[1;32mDone!\033[0m\n\n"
 printf "Start Ollama:     ollama serve\n"
-printf "Test the model:   ollama run qwen3-coder-next\n"
+printf "Test the model:   ollama run gemma4:31b\n"
 printf "Chat UI:          open Msty from Applications\n"
 printf "Coding agent:     pi (run from any project directory)\n"
 printf "\nMLX acceleration is active via OLLAMA_USE_MLX=1 in ~/.zshrc\n"
-printf "For higher quality pulls on 48GB:\n"
-printf "  ollama pull qwen3-coder-next:q6_K\n"
-printf "  ollama pull qwen3-coder-next:q8_0\n"
