@@ -144,6 +144,16 @@ VS Code/Cursor settings written automatically:
 
 ## Using the Local LLM Stack
 
+### MLX acceleration
+
+Ollama 0.19+ uses Apple's MLX framework on Apple Silicon instead of llama.cpp, giving significantly faster inference. This is enabled via an environment variable already set in `~/.zshrc`:
+
+```bash
+export OLLAMA_USE_MLX=1
+```
+
+This is set automatically by `install.sh`. If you're setting up manually, add it to your shell profile and open a new terminal before running Ollama.
+
 ### Start Ollama
 
 ```bash
