@@ -7,6 +7,16 @@ set -euo pipefail
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
 
+# ── Preflight: Xcode Command Line Tools ───────────────────────
+# Required by Homebrew. Opens a GUI dialog so cannot be automated.
+if ! xcode-select -p &>/dev/null; then
+  printf "\nXcode Command Line Tools are not installed.\n"
+  printf "Run the following, wait for the install to complete, then re-run this script:\n\n"
+  printf "  xcode-select --install\n\n"
+  exit 1
+fi
+ok "Xcode Command Line Tools present"
+
 # ── Homebrew ──────────────────────────────────────────────────
 step "Homebrew"
 if ! command -v brew &>/dev/null; then
