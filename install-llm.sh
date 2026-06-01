@@ -1,11 +1,28 @@
 #!/usr/bin/env bash
 # install-llm.sh — local LLM setup optimised for M5 Pro 48GB
-# Run: bash install-llm.sh
+# Run: bash install-llm.sh  (standalone — no other scripts required)
 
 set -euo pipefail
 
 step() { printf "\n\033[1;34m==>\033[0m %s\n" "$1"; }
 ok()   { printf "\033[1;32m  ✓\033[0m %s\n" "$1"; }
+
+# ── Homebrew ──────────────────────────────────────────────────
+step "Homebrew"
+if ! command -v brew &>/dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+ok "Homebrew ready"
+
+# ── Node (required for oh-my-pi) ──────────────────────────────
+step "Node"
+if ! command -v node &>/dev/null; then
+  brew install node
+fi
+ok "Node ready"
 
 # ── Ollama ────────────────────────────────────────────────────
 step "Ollama (local LLM server)"
@@ -19,10 +36,6 @@ ok "Msty installed"
 
 # ── oh-my-pi (terminal coding agent) ─────────────────────────
 step "oh-my-pi (AI coding agent)"
-if ! command -v npm &>/dev/null; then
-  printf "npm not found — run install-dev.sh first, then re-run this script.\n"
-  exit 1
-fi
 npm install -g @mariozechner/pi-coding-agent
 ok "pi coding agent installed"
 
