@@ -139,6 +139,86 @@ VS Code/Cursor settings written automatically:
 
 > Model pulls Q4 by default (~18GB). MLX acceleration enabled via `OLLAMA_USE_MLX=1` in `.zshrc`.
 
+---
+
+## Using the Local LLM Stack
+
+### Start Ollama
+
+Ollama must be running before using any local model.
+
+```bash
+ollama serve
+```
+
+Leave this running in a terminal, or start Ollama from your login items so it runs automatically.
+
+Verify the model is available:
+
+```bash
+ollama list
+# gemma4:31b   ...
+```
+
+### Chat UI — Msty
+
+Open **Msty** from Applications. It auto-discovers the running Ollama server and lists `gemma4:31b` as an available model. No configuration needed.
+
+### Terminal coding agent — pi
+
+`pi` is a terminal coding agent (like Claude Code) that runs against your local model via Ollama.
+
+**One-time setup — configure pi to use your local model:**
+
+Create `~/.pi/agent/models.json`:
+
+```json
+{
+  "providers": {
+    "ollama": {
+      "baseUrl": "http://localhost:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [{ "id": "gemma4:31b" }]
+    }
+  }
+}
+```
+
+The `apiKey` value is ignored by Ollama — any string works.
+
+**Run pi from a project:**
+
+```bash
+cd ~/my-project
+pi
+```
+
+Pi opens an interactive session. Inside the session, switch model with `/model` and select `gemma4:31b` from the list. The config reloads on each `/model` open, so you can edit it without restarting.
+
+**Path-scoped model pinning** (optional) — pin a specific model to a repo without touching the global config. In `~/.pi/agent/models.json`, add a `paths` section:
+
+```json
+{
+  "paths": {
+    "~/my-project": { "model": "ollama/gemma4:31b" }
+  }
+}
+```
+
+The closest matching path wins, so you can set different models per project.
+
+### Useful Ollama commands
+
+```bash
+ollama list                    # show pulled models
+ollama run gemma4:31b          # interactive REPL with the model
+ollama pull gemma4:31b         # re-pull or update the model
+ollama rm gemma4:31b           # remove the model to free disk space
+```
+
+---
+
 ### install-apps.sh — Applications
 
 | App | Purpose |
