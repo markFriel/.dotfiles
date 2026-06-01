@@ -40,7 +40,7 @@ Or run scripts individually in order:
 ./install-dev.sh      # developer tools — Node, Docker, CLIs, Python toolchain
 ./install-apps.sh     # applications — editors, browser, productivity apps
 ./install-r.sh        # R environment — rig, R, radian, languageserver, VS Code setup
-./install-llm.sh      # local LLM — Ollama, Qwen3-Coder-Next, oh-my-pi, Msty
+./install-llm.sh      # local LLM — Ollama, Gemma 4 31B, oh-my-pi
 ```
 
 Then open a new terminal and run:
@@ -146,28 +146,15 @@ VS Code/Cursor settings written automatically:
 
 ### Start Ollama
 
-Ollama must be running before using any local model.
-
 ```bash
 ollama serve
 ```
 
-Leave this running in a terminal, or start Ollama from your login items so it runs automatically.
-
-Verify the model is available:
-
-```bash
-ollama list
-# gemma4:31b   ...
-```
+Leave this running in a terminal, or add Ollama to login items so it starts automatically.
 
 ### Terminal coding agent — pi
 
-`pi` is a terminal coding agent (like Claude Code) that runs against your local model via Ollama.
-
-**One-time setup — configure pi to use your local model:**
-
-Create `~/.pi/agent/models.json`:
+`pi` is a terminal coding agent that runs against your local model. One-time setup — create `~/.pi/agent/models.json`:
 
 ```json
 {
@@ -182,36 +169,26 @@ Create `~/.pi/agent/models.json`:
 }
 ```
 
-The `apiKey` value is ignored by Ollama — any string works.
-
-**Run pi from a project:**
+Then run from any project directory:
 
 ```bash
-cd ~/my-project
 pi
 ```
 
-Pi opens an interactive session. Inside the session, switch model with `/model` and select `gemma4:31b` from the list. The config reloads on each `/model` open, so you can edit it without restarting.
+Switch model mid-session with `/model`. The config reloads on each `/model` open.
 
-**Path-scoped model pinning** (optional) — pin a specific model to a repo without touching the global config. In `~/.pi/agent/models.json`, add a `paths` section:
+### Quick chat with the model
 
-```json
-{
-  "paths": {
-    "~/my-project": { "model": "ollama/gemma4:31b" }
-  }
-}
+```bash
+ollama run gemma4:31b
 ```
-
-The closest matching path wins, so you can set different models per project.
 
 ### Useful Ollama commands
 
 ```bash
-ollama list                    # show pulled models
-ollama run gemma4:31b          # interactive REPL with the model
-ollama pull gemma4:31b         # re-pull or update the model
-ollama rm gemma4:31b           # remove the model to free disk space
+ollama list              # show pulled models
+ollama pull gemma4:31b   # re-pull or update the model
+ollama rm gemma4:31b     # remove the model to free disk space
 ```
 
 ---
